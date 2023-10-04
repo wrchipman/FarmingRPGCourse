@@ -1,9 +1,5 @@
-using UnityEngine;
-
-public class MovementAnimationParameterControl : MonoBehaviour
+public enum ToolEffect
 {
-  private void AnimationEventPlayFootstepSound()
-    {
-
-    }
+    none,
+    watering
 }
