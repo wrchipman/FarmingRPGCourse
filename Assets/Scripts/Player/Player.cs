@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.Windows;
 
@@ -29,6 +28,8 @@ public class Player : SingletonMonoBehaviour<Player>
     private bool isSwingingToolUp;
     private bool isSwingingToolDown;
 
+    private Camera mainCamera;
+    
     private Rigidbody2D rigidBody2D;
 
 #pragma warning disable 414
@@ -44,6 +45,9 @@ public class Player : SingletonMonoBehaviour<Player>
     {
         base.Awake();
         rigidBody2D = GetComponent<Rigidbody2D>();
+
+        //Get reference to main camera
+        mainCamera = Camera.main;
     }
 
     private void Update()
@@ -162,6 +166,13 @@ public class Player : SingletonMonoBehaviour<Player>
             movementSpeed = Settings.runningSpeed;
         }
     }
+
+    public Vector3 GetPlayerViewportPosition()
+    {
+        // Vector3 viewport position for player ((0,0) viewport bottom left, (1,1) viewport top right
+        return mainCamera.WorldToViewportPoint(transform.position);
+    }
+
 }
 
     
