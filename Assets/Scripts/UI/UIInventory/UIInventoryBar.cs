@@ -6,7 +6,8 @@ using UnityEngine;
 public class UIInventoryBar : MonoBehaviour
 {
     [SerializeField] private Sprite blank16x16sprite = null;
-    [SerializeField] private UIInventorySlot[] inventorySlot = null;    
+    [SerializeField] private UIInventorySlot[] inventorySlot = null;
+    public GameObject inventoryBarDraggedItem;
     
     private RectTransform rectTransform;
 
@@ -43,7 +44,7 @@ public class UIInventoryBar : MonoBehaviour
             {
                 inventorySlot[i].inventorySlotImage.sprite = blank16x16sprite;
                 inventorySlot[i].TextMeshProUGUI.text = "";
-                inventorySlot[i].ItemDetails = null;
+                inventorySlot[i].itemDetails = null;
                 inventorySlot[i].itemQuantity = 0;
             }
         }
@@ -71,7 +72,7 @@ public class UIInventoryBar : MonoBehaviour
                             //add images and details to inventory item slot
                             inventorySlot[i].inventorySlotImage.sprite = itemDetails.itemSprite;
                             inventorySlot[i].TextMeshProUGUI.text = inventoryList[i].itemQuantity.ToString();
-                            inventorySlot[i].ItemDetails = itemDetails;
+                            inventorySlot[i].itemDetails = itemDetails;
                             inventorySlot[i].itemQuantity = inventoryList[i].itemQuantity;
                         }
                     }
