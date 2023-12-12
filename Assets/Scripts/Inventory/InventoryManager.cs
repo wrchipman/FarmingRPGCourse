@@ -165,6 +165,48 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
         }
     }
 
+
+    /// <summary>
+    /// Get the item type description for an item type
+    /// </summary>
+    /// <param name="itemType"></param>
+    /// <returns></returns>
+    public string GetItemTypeDescription(ItemType itemType) 
+    {
+        string itemTypeDescription;
+        switch (itemType)
+        {
+            case ItemType.Breaking_tool:
+                itemTypeDescription = Settings.BreakingTool;
+                break;
+                
+            case ItemType.Chopping_tool:
+                itemTypeDescription = Settings.ChoppingTool;
+                break;
+
+            case ItemType.Hoeing_tool:
+                itemTypeDescription = Settings.HoeingTool;
+                break;
+
+            case ItemType.Reaping_tool:
+                itemTypeDescription = Settings.ReapingTool;
+                break;
+
+            case ItemType.Watering_tool:
+                itemTypeDescription = Settings.WateringTool;
+                break;
+
+            case ItemType.Collecting_tool:
+                itemTypeDescription = Settings.CollectingTool;
+                break;
+
+            default:
+                itemTypeDescription = itemType.ToString();
+                break;
+        }
+        return itemTypeDescription;
+    }
+
     public void RemoveItem(InventoryLocation inventoryLocation, int itemCode)
     {
         List<InventoryItem> inventoryList = inventoryLists[(int)(inventoryLocation)];
@@ -196,6 +238,22 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
         else
         {
             inventoryList.RemoveAt(position);
+        }
+    }
+
+    public void SwapInventoryItems(InventoryLocation inventoryLocation, int fromItem, int toItem) 
+    {
+        // If fromItem index and toItem index are within the bounds of the list, not the same, and greater than or equal to zero
+        if (fromItem < inventoryLists[(int)inventoryLocation].Count && toItem < inventoryLists[(int)inventoryLocation].Count && fromItem != toItem && fromItem >= 0 && toItem >= 0)
+        {
+            InventoryItem fromInventoryItem = inventoryLists[(int)inventoryLocation][fromItem];
+            InventoryItem toInventoryItem = inventoryLists[(int)inventoryLocation][toItem];
+
+            inventoryLists[(int)inventoryLocation][toItem] = fromInventoryItem;
+            inventoryLists[(int)inventoryLocation][fromItem] = toInventoryItem;
+
+            // Send event that inventory has been updated
+            EventHandler.CallInventoryUpdatedEvent(inventoryLocation, inventoryLists[(int)inventoryLocation]);
         }
     }
 
