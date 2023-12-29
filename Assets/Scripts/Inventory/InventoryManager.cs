@@ -157,7 +157,7 @@ public class InventoryManager : SingletonMonoBehaviour<InventoryManager>
 
 
     /// <summary>
-    /// Returns the itemDetails (from the SO_ItemList) for the itemCode, or null f the item code doesn't exist 
+    /// Returns the itemDetails (from the SO_ItemList) for the itemCode, or null if the item code doesn't exist 
     /// </summary>
     /// <param name="itemCode"></param>
     /// <returns></returns>
