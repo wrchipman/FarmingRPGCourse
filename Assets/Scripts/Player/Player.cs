@@ -196,13 +196,17 @@ public class Player : SingletonMonoBehaviour<Player>
     // TODO: Remove
     private void PlayerTestInput()
     {
+        if (UnityEngine.Input.GetKeyDown(KeyCode.G))
+        {
+            TimeManager.Instance.TestAdvanceGameDay();
+        }
         if (UnityEngine.Input.GetKey(KeyCode.T))
         {
             TimeManager.Instance.TestAdvanceGameMinute();
         }
-        if (UnityEngine.Input.GetKey(KeyCode.G))
-        {
-            TimeManager.Instance.TestAdvanceGameDay();
+        if (UnityEngine.Input.GetKeyDown(KeyCode.L)) 
+        { 
+            SceneControllerManager.Instance.FadeAndLoadScene(SceneName.Scene1_Farm.ToString(), transform.position);
         }
     }
 
@@ -228,8 +232,6 @@ public class Player : SingletonMonoBehaviour<Player>
                false, false, false, false);
 
     }
-
- 
 
     public void DisablePlayerInput()
     {
