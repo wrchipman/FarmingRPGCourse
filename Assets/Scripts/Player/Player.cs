@@ -101,8 +101,7 @@ public class Player : SingletonMonoBehaviour<Player>
 
         }
         #endregion Player Input
-
-        
+   
     }
 
 
