@@ -2992,7 +2992,7 @@ MonoBehaviour:
   - {fileID: 803788422}
   - {fileID: 890508156}
   inventoryBarDraggedItem: {fileID: 1106683331003255358, guid: 96c51a74997f1df4481f704b300cb97d, type: 3}
-  inventoryTextBoxGameobject: {fileID: 2562797251713647166, guid: e1ab575f984db81489799967a196d01e, type: 3}
+  inventoryTextBoxGameobject: {fileID: 0}
 --- !u!114 &2003337607
 MonoBehaviour:
   m_ObjectHideFlags: 0
