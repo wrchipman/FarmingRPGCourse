@@ -74494,19 +74494,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6608304512089197518, guid: 0e0db5337b6aebb4fadd49025e1d3424, type: 3}
       propertyPath: m_Size.x
-      value: 1.2500602
+      value: 1.0100911
       objectReference: {fileID: 0}
     - target: {fileID: 6608304512089197518, guid: 0e0db5337b6aebb4fadd49025e1d3424, type: 3}
       propertyPath: m_Size.y
-      value: 0.43736458
+      value: 0.2830987
       objectReference: {fileID: 0}
     - target: {fileID: 6608304512089197518, guid: 0e0db5337b6aebb4fadd49025e1d3424, type: 3}
       propertyPath: m_Offset.x
-      value: 0.03125745
+      value: 0.014116764
       objectReference: {fileID: 0}
     - target: {fileID: 6608304512089197518, guid: 0e0db5337b6aebb4fadd49025e1d3424, type: 3}
       propertyPath: m_Offset.y
-      value: 0.2813177
+      value: 0.35845065
       objectReference: {fileID: 0}
     - target: {fileID: 8160000209124316540, guid: 0e0db5337b6aebb4fadd49025e1d3424, type: 3}
       propertyPath: m_RootOrder
@@ -75537,7 +75537,7 @@ GameObject:
   - component: {fileID: 1229493135}
   m_Layer: 0
   m_Name: GroundDecoration2
-  m_TagString: Untagged
+  m_TagString: GroundDecoration2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133920,7 +133920,7 @@ GameObject:
   - component: {fileID: 1705792308}
   m_Layer: 0
   m_Name: GroundDecoration1
-  m_TagString: Untagged
+  m_TagString: GroundDecoration1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
