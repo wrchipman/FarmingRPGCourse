@@ -605,10 +605,7 @@ public class Player : SingletonMonoBehaviour<Player>
         {
             TimeManager.Instance.TestAdvanceGameMinute();
         }
-        if (UnityEngine.Input.GetKeyDown(KeyCode.L)) 
-        { 
-            SceneControllerManager.Instance.FadeAndLoadScene(SceneName.Scene1_Farm.ToString(), transform.position);
-        }
+       
     }
 
     private void ResetMovement()
