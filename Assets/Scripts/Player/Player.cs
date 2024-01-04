@@ -443,6 +443,9 @@ public class Player : SingletonMonoBehaviour<Player>
         // Set grid property to dug
         GridPropertiesManager.Instance.SetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY, gridPropertyDetails);
 
+        // Display watered grid tiles
+        GridPropertiesManager.Instance.DisplayWateredGround(gridPropertyDetails);
+
         // After animation pause
         yield return afterLiftToolAnimationPause;
 
