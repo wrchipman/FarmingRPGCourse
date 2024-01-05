@@ -35,12 +35,14 @@ public class UIInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private void OnEnable()
     {
         EventHandler.AfterSceneLoadEvent += SceneLoaded;
+        EventHandler.RemoveSelectedItemFromInventoryEvent += RemoveSelectedItemFromInventory;
         EventHandler.DropSelectedItemEvent += DropSelectedItemAtMousePosition;
     }
 
     private void OnDisable()
     {
         EventHandler.AfterSceneLoadEvent -= SceneLoaded;
+        EventHandler.RemoveSelectedItemFromInventoryEvent -= RemoveSelectedItemFromInventory;
         EventHandler.DropSelectedItemEvent -= DropSelectedItemAtMousePosition;
     }
 
@@ -60,6 +62,23 @@ public class UIInventorySlot : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         // Set item type to none
         gridCursor.SelectedItemType = ItemType.none;
         cursor.SelectedItemType = ItemType.none;
+    }
+
+    private void RemoveSelectedItemFromInventory()
+    {
+        if (itemDetails != null && isSelected)
+        {
+            int itemCode = itemDetails.itemCode;
+
+            // Remove item from playersinventory
+            InventoryManager.Instance.RemoveItem(InventoryLocation.player, itemCode);
+
+            // if no more of item then clear selected
+            if (InventoryManager.Instance.FindItemInInventory(InventoryLocation.player, itemCode) == -1)
+            {
+                ClearSelectedItem();
+            }
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
