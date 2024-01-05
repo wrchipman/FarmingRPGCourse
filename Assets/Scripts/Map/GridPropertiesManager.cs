@@ -530,6 +530,11 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
         }
     }
 
+    /// <summary>
+    ///  Returns the Crop object at the gridX, gridY position or null if no crop was found
+    /// </summary>
+    /// <param name="gridPropertyDetails"></param>
+    /// <returns></returns>
     public Crop GetCropObjectAtGridLocation(GridPropertyDetails gridPropertyDetails)
     {
         Vector3 worldPosition = grid.GetCellCenterWorld(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY, 0));
@@ -548,6 +553,16 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
                 break;
         }
         return crop;
+    }
+
+    /// <summary>
+    /// Returns Crop Details for the provided seedItemCode
+    /// </summary>
+    /// <param name="seedItemCode"></param>
+    /// <returns></returns>
+    public CropDetails GetCropDetails(int seedItemCode)
+    {
+        return so_CropDetailsList.GetCropDetails(seedItemCode);
     }
 
     /// <summary>
