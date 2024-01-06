@@ -4,6 +4,7 @@ using UnityEngine;
 public class VFXManager : SingletonMonoBehaviour<VFXManager>
 {
     private WaitForSeconds twoSeconds;
+    [SerializeField] private GameObject deciduousLeavesFallingPrefab = null;
     [SerializeField] private GameObject reapingPrefab = null;
 
     protected override void Awake()
@@ -39,6 +40,11 @@ public class VFXManager : SingletonMonoBehaviour<VFXManager>
                 StartCoroutine(DisableHarvestActionEffect(reaping, twoSeconds));
                 break;
 
+            case HarvestActionEffect.deciduousLeavesFalling:
+                GameObject deciduousLeavesFalling = PoolManager.Instance.ReuseObject(deciduousLeavesFallingPrefab, effectPosition, Quaternion.identity);
+                deciduousLeavesFalling.SetActive(true);
+                StartCoroutine(DisableHarvestActionEffect(deciduousLeavesFalling, twoSeconds));
+                break;
             case HarvestActionEffect.none:
                 break;
 
