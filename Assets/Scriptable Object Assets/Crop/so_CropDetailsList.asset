@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cropDetails:
   - seedItemCode: 10006
-    growthDays: 0000000001000000010000000100000002000000
-    totalGrowthDays: 5
+    growthDays: 0000000001000000020000000300000005000000
     growthPrefab:
     - {fileID: 8110134426988438420, guid: 5d598e638919d5842b9f348326e1e6e1, type: 3}
     - {fileID: 8110134426988438420, guid: 5d598e638919d5842b9f348326e1e6e1, type: 3}
