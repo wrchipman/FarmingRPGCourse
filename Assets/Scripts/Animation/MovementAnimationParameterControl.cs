@@ -1,10 +1,12 @@
+﻿
 using UnityEngine;
 
-public class MovementAnimationParameterControl: MonoBehaviour
+public class MovementAnimationParameterControl : MonoBehaviour
 {
     private Animator animator;
 
-    // Use this for initialization
+    // Use this for initialisation
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -19,8 +21,8 @@ public class MovementAnimationParameterControl: MonoBehaviour
     {
         EventHandler.MovementEvent -= SetAnimationParameters;
     }
-    private void SetAnimationParameters(float xInput, float yInput, bool isWalking, bool isRunning, bool isIdle, bool isCarrying,
-        ToolEffect toolEffect,
+
+    private void SetAnimationParameters(float xInput, float yInput, bool isWalking, bool isRunning, bool isIdle, bool isCarrying, ToolEffect toolEffect,
         bool isUsingToolRight, bool isUsingToolLeft, bool isUsingToolUp, bool isUsingToolDown,
         bool isLiftingToolRight, bool isLiftingToolLeft, bool isLiftingToolUp, bool isLiftingToolDown,
         bool isPickingRight, bool isPickingLeft, bool isPickingUp, bool isPickingDown,
@@ -52,15 +54,6 @@ public class MovementAnimationParameterControl: MonoBehaviour
         if (isLiftingToolDown)
             animator.SetTrigger(Settings.isLiftingToolDown);
 
-        if (isPickingRight)
-            animator.SetTrigger(Settings.isPickingRight);
-        if (isPickingLeft)
-            animator.SetTrigger(Settings.isPickingLeft);
-        if (isPickingUp)
-            animator.SetTrigger(Settings.isPickingUp);
-        if (isPickingDown)
-            animator.SetTrigger(Settings.isPickingDown);
-
         if (isSwingingToolRight)
             animator.SetTrigger(Settings.isSwingingToolRight);
         if (isSwingingToolLeft)
@@ -69,6 +62,15 @@ public class MovementAnimationParameterControl: MonoBehaviour
             animator.SetTrigger(Settings.isSwingingToolUp);
         if (isSwingingToolDown)
             animator.SetTrigger(Settings.isSwingingToolDown);
+
+        if (isPickingRight)
+            animator.SetTrigger(Settings.isPickingRight);
+        if (isPickingLeft)
+            animator.SetTrigger(Settings.isPickingLeft);
+        if (isPickingUp)
+            animator.SetTrigger(Settings.isPickingUp);
+        if (isPickingDown)
+            animator.SetTrigger(Settings.isPickingDown);
 
         if (idleUp)
             animator.SetTrigger(Settings.idleUp);
@@ -79,7 +81,6 @@ public class MovementAnimationParameterControl: MonoBehaviour
         if (idleRight)
             animator.SetTrigger(Settings.idleRight);
     }
-   
 
     private void AnimationEventPlayFootstepSound()
     {

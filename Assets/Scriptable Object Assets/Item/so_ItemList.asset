@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b109add96ab902409f8d0843223cc8c, type: 3}
+  m_Script: {fileID: 11500000, guid: 35c632bea1453fe4a9880a918f3b330e, type: 3}
   m_Name: so_ItemList
   m_EditorClassIdentifier: 
   itemDetails:
@@ -17,8 +17,8 @@ MonoBehaviour:
     itemType: 0
     itemDescription: Canyon Oak Acorn
     itemSprite: {fileID: 21300000, guid: 730e572c78cf0244ca0db36bb8f3af7f, type: 3}
-    itemLongDescription: From small acorns do large trees grow. One day this humble
-      acorn could be a towering giant!
+    itemLongDescription: From small acorns do large oak trees grow. One day this
+      humble acorn could be a towering giant!
     itemUseGridRadius: 2
     itemUseRadius: 0
     isStartingItem: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     itemType: 1
     itemDescription: Pumpkin
     itemSprite: {fileID: 21300000, guid: f0d720006ae6c9e468cc99a9f1713ba1, type: 3}
-    itemLongDescription: A juicy, fat, ripe pumpkin. It makes great soup as well
+    itemLongDescription: A juicy, fat, ripe pumpkin.  It makes great soup as well
       as a scary Halloween face!
     itemUseGridRadius: 2
     itemUseRadius: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
     itemDescription: Corn
     itemSprite: {fileID: 21300000, guid: 081b5033ea188cb48b5d44b99ab920bc, type: 3}
     itemLongDescription: Juicy fresh corn - try it roasted on a BBQ smothered with
-      butter and a health concious sprinkling of salt and pepper
+      butter and a health conscious sprinkling of salt and pepper!
     itemUseGridRadius: 2
     itemUseRadius: 0
     isStartingItem: 0
@@ -69,8 +69,8 @@ MonoBehaviour:
     itemType: 3
     itemDescription: A Basic Hoe
     itemSprite: {fileID: 21300052, guid: 853ac38383c680342ac7e688bf29b197, type: 3}
-    itemLongDescription: 'A strong, sturdy basic hoe - great for breaking up the
-      soil ready for planting '
+    itemLongDescription: A strong, sturdy basic hoe - great for breaking up the soil
+      ready for planting
     itemUseGridRadius: 1
     itemUseRadius: 0
     isStartingItem: 1
@@ -106,7 +106,7 @@ MonoBehaviour:
     itemType: 1
     itemDescription: Parsnip
     itemSprite: {fileID: 21300000, guid: 0a1268bf801d5304ebf16458d7309ac1, type: 3}
-    itemLongDescription: Parsnips are full of fiber and vitamins
+    itemLongDescription: Parsnips are full of fibre and vitamins
     itemUseGridRadius: 2
     itemUseRadius: 0
     isStartingItem: 0
@@ -142,7 +142,8 @@ MonoBehaviour:
   - itemCode: 10010
     itemType: 0
     itemDescription: Canyon Oak Tree Stump
-    itemSprite: {fileID: 7154603021615155856, guid: d241c496741a12d4290e12ba81dd6724, type: 3}
+    itemSprite: {fileID: 7154603021615155856, guid: d241c496741a12d4290e12ba81dd6724,
+      type: 3}
     itemLongDescription: 
     itemUseGridRadius: 0
     itemUseRadius: 0
@@ -154,8 +155,9 @@ MonoBehaviour:
   - itemCode: 10011
     itemType: 0
     itemDescription: Blue Spruce Tree Stump
-    itemSprite: {fileID: -341119608263849502, guid: 5d22327a2a3d2a049a8a59a708d527fe, type: 3}
-    itemLongDescription: 
+    itemSprite: {fileID: -341119608263849502, guid: 5d22327a2a3d2a049a8a59a708d527fe,
+      type: 3}
+    itemLongDescription: The stump of a spruce tree
     itemUseGridRadius: 0
     itemUseRadius: 0
     isStartingItem: 0
@@ -237,7 +239,7 @@ MonoBehaviour:
     canBeCarried: 0
   - itemCode: 10018
     itemType: 8
-    itemDescription: Grass 1
+    itemDescription: Grass1
     itemSprite: {fileID: 21300000, guid: 207ad99171e171b418bcaaa396d5a6f6, type: 3}
     itemLongDescription: 
     itemUseGridRadius: 0
@@ -249,7 +251,7 @@ MonoBehaviour:
     canBeCarried: 0
   - itemCode: 10019
     itemType: 8
-    itemDescription: Grass 2
+    itemDescription: Grass2
     itemSprite: {fileID: 21300000, guid: e452dd2aa629f624390a9ba516a7c47e, type: 3}
     itemLongDescription: 
     itemUseGridRadius: 0

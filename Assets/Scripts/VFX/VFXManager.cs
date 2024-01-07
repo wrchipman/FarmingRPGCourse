@@ -1,19 +1,22 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-public class VFXManager : SingletonMonoBehaviour<VFXManager>
+public class VFXManager : SingletonMonobehaviour<VFXManager>
 {
+
     private WaitForSeconds twoSeconds;
     [SerializeField] private GameObject deciduousLeavesFallingPrefab = null;
-    [SerializeField] private GameObject pineConeFallingPrefab = null;
+    [SerializeField] private GameObject pineConesFallingPrefab = null;
     [SerializeField] private GameObject choppingTreeTrunkPrefab = null;
     [SerializeField] private GameObject reapingPrefab = null;
+
 
     protected override void Awake()
     {
         base.Awake();
 
         twoSeconds = new WaitForSeconds(2f);
+
     }
 
     private void OnDisable()
@@ -36,10 +39,17 @@ public class VFXManager : SingletonMonoBehaviour<VFXManager>
     {
         switch (harvestActionEffect)
         {
-            case HarvestActionEffect.reaping:
-                GameObject reaping = PoolManager.Instance.ReuseObject(reapingPrefab, effectPosition, Quaternion.identity);
-                reaping.SetActive(true);
-                StartCoroutine(DisableHarvestActionEffect(reaping, twoSeconds));
+
+            case HarvestActionEffect.deciduousLeavesFalling:
+                GameObject deciduousLeaveFalling = PoolManager.Instance.ReuseObject(deciduousLeavesFallingPrefab, effectPosition, Quaternion.identity);
+                deciduousLeaveFalling.SetActive(true);
+                StartCoroutine(DisableHarvestActionEffect(deciduousLeaveFalling, twoSeconds));
+                break;
+
+            case HarvestActionEffect.pineConesFalling:
+                GameObject pineConesFalling = PoolManager.Instance.ReuseObject(pineConesFallingPrefab, effectPosition, Quaternion.identity);
+                pineConesFalling.SetActive(true);
+                StartCoroutine(DisableHarvestActionEffect(pineConesFalling, twoSeconds));
                 break;
 
             case HarvestActionEffect.choppingTreeTrunk:
@@ -48,17 +58,12 @@ public class VFXManager : SingletonMonoBehaviour<VFXManager>
                 StartCoroutine(DisableHarvestActionEffect(choppingTreeTrunk, twoSeconds));
                 break;
 
-            case HarvestActionEffect.deciduousLeavesFalling:
-                GameObject deciduousLeavesFalling = PoolManager.Instance.ReuseObject(deciduousLeavesFallingPrefab, effectPosition, Quaternion.identity);
-                deciduousLeavesFalling.SetActive(true);
-                StartCoroutine(DisableHarvestActionEffect(deciduousLeavesFalling, twoSeconds));
+            case HarvestActionEffect.reaping:
+                GameObject reaping = PoolManager.Instance.ReuseObject(reapingPrefab, effectPosition, Quaternion.identity);
+                reaping.SetActive(true);
+                StartCoroutine(DisableHarvestActionEffect(reaping, twoSeconds));
                 break;
 
-            case HarvestActionEffect.pineConeFalling:
-                GameObject pineConeFalling = PoolManager.Instance.ReuseObject(pineConeFallingPrefab, effectPosition, Quaternion.identity);
-                pineConeFalling.SetActive(true);
-                StartCoroutine(DisableHarvestActionEffect(pineConeFalling, twoSeconds));
-                break;
 
             case HarvestActionEffect.none:
                 break;
@@ -67,4 +72,6 @@ public class VFXManager : SingletonMonoBehaviour<VFXManager>
                 break;
         }
     }
+
+
 }

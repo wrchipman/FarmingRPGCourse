@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class GridCoordinate
@@ -13,7 +13,7 @@ public class GridCoordinate
     }
 
     public static explicit operator Vector2(GridCoordinate gridCoordinate)
-    { 
+    {
         return new Vector2((float)gridCoordinate.x, (float)gridCoordinate.y);
     }
 

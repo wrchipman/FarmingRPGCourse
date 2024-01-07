@@ -1,8 +1,8 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(GenerateGUID))]
-public class SceneItemsManager : SingletonMonoBehaviour<SceneItemsManager>, ISaveable
+public class SceneItemsManager : SingletonMonobehaviour<SceneItemsManager>, ISaveable
 {
     private Transform parentItem;
     [SerializeField] private GameObject itemPrefab = null;
@@ -23,16 +23,19 @@ public class SceneItemsManager : SingletonMonoBehaviour<SceneItemsManager>, ISav
         base.Awake();
 
         ISaveableUniqueID = GetComponent<GenerateGUID>().GUID;
-        GameObjectSave = new GameObjectSave();   
+        GameObjectSave = new GameObjectSave();
     }
 
+    /// <summary>
+    /// Destroy items currently in the scene
+    /// </summary>
     private void DestroySceneItems()
     {
         // Get all items in the scene
         Item[] itemsInScene = GameObject.FindObjectsOfType<Item>();
 
-        // Loop through all items in the scene
-        for (int i = 0; i < itemsInScene.Length; i++)
+        // Loop through all scene items and destroy them
+        for (int i = itemsInScene.Length - 1; i > -1; i--)
         {
             Destroy(itemsInScene[i].gameObject);
         }
@@ -85,7 +88,7 @@ public class SceneItemsManager : SingletonMonoBehaviour<SceneItemsManager>, ISav
                 // scene list items found - destroy existing items in scene
                 DestroySceneItems();
 
-                // Now instantiate the list of scene items
+                // now instantiate the list of scene items
                 InstantiateSceneItems(sceneSave.listSceneItem);
             }
         }
@@ -113,16 +116,15 @@ public class SceneItemsManager : SingletonMonoBehaviour<SceneItemsManager>, ISav
             sceneItem.position = new Vector3Serializable(item.transform.position.x, item.transform.position.y, item.transform.position.z);
             sceneItem.itemName = item.name;
 
-            // add scene item to list
+            // Add scene item to list
             sceneItemList.Add(sceneItem);
         }
 
-        // Create list scene items in scene save and add to it
+        // Create list scene items in scene save and set to scene item list
         SceneSave sceneSave = new SceneSave();
         sceneSave.listSceneItem = sceneItemList;
 
         // Add scene save to gameobject
         GameObjectSave.sceneData.Add(sceneName, sceneSave);
     }
-
 }

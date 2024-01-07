@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -204,4 +204,3 @@ public class Cursor : MonoBehaviour
         return RectTransformUtility.PixelAdjustPoint(screenPosition, cursorRectTransform, canvas);
     }
 }
-

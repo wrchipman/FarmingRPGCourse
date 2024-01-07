@@ -1,7 +1,7 @@
-[System.Serializable]
-
+﻿[System.Serializable]
 public struct CharacterAttribute
 {
+
     public CharacterPartAnimator characterPart;
     public PartVariantColour partVariantColour;
     public PartVariantType partVariantType;

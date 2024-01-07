@@ -1,5 +1,6 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
+
 
 public class GameClock : MonoBehaviour
 {
@@ -21,20 +22,20 @@ public class GameClock : MonoBehaviour
 
     private void UpdateGameTime(int gameYear, Season gameSeason, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
     {
-        //Update time
+        // Update time
 
         gameMinute = gameMinute - (gameMinute % 10);
 
         string ampm = "";
         string minute;
 
-        if (gameHour >= 12) 
+        if (gameHour >= 12)
         {
-            ampm = "pm";
-        } 
+            ampm = " pm";
+        }
         else
         {
-            ampm = "am";
+            ampm = " am";
         }
 
         if (gameHour >= 13)
@@ -53,9 +54,11 @@ public class GameClock : MonoBehaviour
 
         string time = gameHour.ToString() + " : " + minute + ampm;
 
+
         timeText.SetText(time);
-        dateText.SetText(gameDayOfWeek + ". "+ gameDay.ToString());
+        dateText.SetText(gameDayOfWeek + ". " + gameDay.ToString());
         seasonText.SetText(gameSeason.ToString());
-        yearText.SetText("Year " + gameYear.ToString());   
+        yearText.SetText("Year " + gameYear);
     }
+
 }

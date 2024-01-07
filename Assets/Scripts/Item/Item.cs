@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Item : MonoBehaviour
 {
@@ -17,25 +17,28 @@ public class Item : MonoBehaviour
 
     private void Start()
     {
-       if (ItemCode != 0)
+        if (ItemCode != 0)
         {
             Init(ItemCode);
         }
     }
 
-    public void Init(int itemCodeParam)
+    public void Init (int itemCodeParam)
     {
         if (itemCodeParam != 0)
         {
             ItemCode = itemCodeParam;
+
             ItemDetails itemDetails = InventoryManager.Instance.GetItemDetails(ItemCode);
+
             spriteRenderer.sprite = itemDetails.itemSprite;
 
-            // if item type is reapable then add nudgeable component
-            if(itemDetails.itemType == ItemType.Reapable_scenary)
+            // If item type is reapable then add nudgeable component
+            if (itemDetails.itemType == ItemType.Reapable_scenary)
             {
                 gameObject.AddComponent<ItemNudge>();
             }
         }
     }
 }
+

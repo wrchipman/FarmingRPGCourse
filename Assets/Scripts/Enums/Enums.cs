@@ -1,4 +1,4 @@
-public enum AnimationName
+﻿public enum AnimationName
 {
     idleDown,
     idleUp,
@@ -44,7 +44,6 @@ public enum CharacterPartAnimator
     hat,
     count
 }
-
 public enum PartVariantColour
 {
     none,
@@ -62,7 +61,6 @@ public enum PartVariantType
     wateringCan,
     count
 }
-
 public enum GridBoolProperty
 {
     diggable,
@@ -72,6 +70,7 @@ public enum GridBoolProperty
     isNPCObstacle
 }
 
+
 public enum InventoryLocation
 {
     player,
@@ -79,16 +78,35 @@ public enum InventoryLocation
     count
 }
 
+public enum SceneName
+{
+    Scene1_Farm,
+    Scene2_Field,
+    Scene3_Cabin
+}
+
+public enum Season
+{
+    Spring,
+    Summer,
+    Autumn,
+    Winter,
+    none,
+    count
+}
+
+
 public enum ToolEffect
 {
     none,
     watering
 }
 
+
 public enum HarvestActionEffect
 {
     deciduousLeavesFalling,
-    pineConeFalling,
+    pineConesFalling,
     choppingTreeTrunk,
     breakingStone,
     reaping,
@@ -97,10 +115,10 @@ public enum HarvestActionEffect
 
 public enum Direction
 {
-    up, 
-    down, 
-    left, 
-    right,  
+    up,
+    down,
+    left,
+    right,
     none
 }
 
@@ -116,24 +134,6 @@ public enum ItemType
     Collecting_tool,
     Reapable_scenary,
     Furniture,
-    none,
-    count
-}
-
-public enum SceneName
-{
-    Scene1_Farm,
-    Scene2_Field,
-    Scene3_Cabin
-}
-
-
-public enum Season
-{
-    Spring, 
-    Summer,
-    Autumn,
-    Winter,
     none,
     count
 }

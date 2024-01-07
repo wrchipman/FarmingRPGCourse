@@ -1,4 +1,4 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -24,24 +24,22 @@ public class TilemapGridProperties : MonoBehaviour
     }
 
     private void OnDisable()
-    {
-        // Only populate in the editor
+    {        // Only populate in the editor
         if (!Application.IsPlaying(gameObject))
         {
             UpdateGridProperties();
 
             if (gridProperties != null)
             {
-                // This is required to ensure that the updated gridproperties gameobject gets saved when the game is saved - otherwise they are not saved
+                // This is required to ensure that the updated gridproperties gameobject gets saved when the game is saved - otherwise they are not saved.
                 EditorUtility.SetDirty(gridProperties);
             }
-
         }
     }
 
     private void UpdateGridProperties()
     {
-        // Compress tilemap bounds
+        // Compress timemap bounds
         tilemap.CompressBounds();
 
         // Only populate in the editor
@@ -69,7 +67,7 @@ public class TilemapGridProperties : MonoBehaviour
     }
 
     private void Update()
-    {
+    {        // Only populate in the editor
         if (!Application.IsPlaying(gameObject))
         {
             Debug.Log("DISABLE PROPERTY TILEMAPS");

@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class SaveLoadManager : SingletonMonoBehaviour<SaveLoadManager>
+public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 {
     public List<ISaveable> iSaveableObjectList;
 

@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAnimationTest : MonoBehaviour
 {
@@ -34,12 +32,11 @@ public class PlayerAnimationTest : MonoBehaviour
 
     private void Update()
     {
-        EventHandler.CallMovementEvent(inputX, inputY, isWalking, isRunning, isIdle, isCarrying,
-                toolEffect,
-                isUsingToolRight, isUsingToolLeft, isUsingToolUp, isUsingToolDown,
-                isLiftingToolRight, isLiftingToolLeft, isLiftingToolUp, isLiftingToolDown,
-                isPickingRight, isPickingLeft, isPickingUp, isPickingDown,
-                isSwingingToolRight, isSwingingToolLeft, isSwingingToolUp, isSwingingToolDown,
-                idleUp, idleDown, idleLeft, idleRight);
+        EventHandler.CallMovementEvent(inputX, inputY, isWalking, isRunning, isIdle, isCarrying, toolEffect,
+isUsingToolRight, isUsingToolLeft, isUsingToolUp, isUsingToolDown,
+isLiftingToolRight, isLiftingToolLeft, isLiftingToolUp, isLiftingToolDown,
+isPickingRight, isPickingLeft, isPickingUp, isPickingDown,
+isSwingingToolRight, isSwingingToolLeft, isSwingingToolUp, isSwingingToolDown,
+idleUp, idleDown, idleLeft, idleRight);
     }
 }

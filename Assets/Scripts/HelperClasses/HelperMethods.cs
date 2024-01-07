@@ -1,15 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class HelperMethods
+public static class HelperMethods
 {
+
     /// <summary>
-    /// Gets components of type T at positionToCheck. Returns true if at least 1 found and found components are returned in componentAtPosition list
+    /// Gets Components of type T at positionToCheck.  Returns true if at least one found and the found components are returned in componentAtPositionList
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="componentsAtPositionList"></param>
-    /// <param name="positionToCheck"></param>
-    /// <returns></returns>
     public static bool GetComponentsAtCursorLocation<T>(out List<T> componentsAtPositionList, Vector3 positionToCheck)
     {
         bool found = false;
@@ -28,11 +25,11 @@ public class HelperMethods
             if (tComponent != null)
             {
                 found = true;
-                componentList.Add(tComponent); 
+                componentList.Add(tComponent);
             }
             else
             {
-                tComponent = collider2DArray[i].GetComponentInChildren<T>();
+                tComponent = collider2DArray[i].gameObject.GetComponentInChildren<T>();
                 if (tComponent != null)
                 {
                     found = true;
@@ -46,10 +43,13 @@ public class HelperMethods
         return found;
     }
 
+
+    /// <summary>
+    /// Gets Components of type T at box with centre point and size and angle.  Returns true if at least one found and the found components are returned in the list
+    /// </summary>
     public static bool GetComponentsAtBoxLocation<T>(out List<T> listComponentsAtBoxPosition, Vector2 point, Vector2 size, float angle)
     {
         bool found = false;
-
         List<T> componentList = new List<T>();
 
         Collider2D[] collider2DArray = Physics2D.OverlapBoxAll(point, size, angle);
@@ -66,30 +66,25 @@ public class HelperMethods
             else
             {
                 tComponent = collider2DArray[i].gameObject.GetComponentInChildren<T>();
-                if(tComponent != null)
+                if (tComponent != null)
                 {
                     found = true;
                     componentList.Add(tComponent);
                 }
             }
         }
+
         listComponentsAtBoxPosition = componentList;
+
         return found;
     }
 
     /// <summary>
-    /// Returns array of components of type T at box with center point and size and angle. The numberOfCollidersToTest for is passed as a parameter. Found components
-    /// are returned in the array.
+    /// Returns array of components of type T at box with centre point and size and angle. The numberOfCollidersToTest for is passed as a parameter. Found components are returned in the array.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="numberOfColliderstoTest"></param>
-    /// <param name="point"></param>
-    /// <param name="size"></param>
-    /// <param name="angle"></param>
-    /// <returns></returns>
-    public static T[] GetComponentsAtBoxLocationNonAlloc<T>(int numberOfColliderstoTest, Vector2 point, Vector2 size, float angle)
+    public static T[] GetComponentsAtBoxLocationNonAlloc<T>(int numberOfCollidersToTest, Vector2 point, Vector2 size, float angle)
     {
-        Collider2D[] collider2DArray = new Collider2D[numberOfColliderstoTest];
+        Collider2D[] collider2DArray = new Collider2D[numberOfCollidersToTest];
 
         Physics2D.OverlapBoxNonAlloc(point, size, angle, collider2DArray);
 
@@ -97,11 +92,12 @@ public class HelperMethods
 
         T[] componentArray = new T[collider2DArray.Length];
 
-        for (int i = collider2DArray.Length - 1; i>=0 ;i--)
+        for (int i = collider2DArray.Length - 1; i >= 0; i--)
         {
             if (collider2DArray[i] != null)
             {
                 tComponent = collider2DArray[i].gameObject.GetComponent<T>();
+
                 if (tComponent != null)
                 {
                     componentArray[i] = tComponent;
@@ -111,4 +107,5 @@ public class HelperMethods
 
         return componentArray;
     }
+
 }

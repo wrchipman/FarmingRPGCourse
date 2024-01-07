@@ -1,7 +1,7 @@
-public interface ISaveable
+﻿public interface ISaveable
 {
     string ISaveableUniqueID { get; set; }
-    
+
     GameObjectSave GameObjectSave { get; set; }
 
     void ISaveableRegister();

@@ -1,4 +1,4 @@
-[System.Serializable]
+﻿[System.Serializable]
 public class GridProperty
 {
     public GridCoordinate gridCoordinate;

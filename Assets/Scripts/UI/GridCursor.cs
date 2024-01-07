@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -118,6 +118,7 @@ public class GridCursor : MonoBehaviour
                     break;
 
                 case ItemType.Commodity:
+
                     if (!IsCursorValidForCommodity(gridPropertyDetails))
                     {
                         SetCursorToInvalid();
@@ -128,8 +129,8 @@ public class GridCursor : MonoBehaviour
                 case ItemType.Watering_tool:
                 case ItemType.Breaking_tool:
                 case ItemType.Chopping_tool:
-                case ItemType.Reaping_tool:
                 case ItemType.Hoeing_tool:
+                case ItemType.Reaping_tool:
                 case ItemType.Collecting_tool:
                     if (!IsCursorValidForTool(gridPropertyDetails, itemDetails))
                     {
@@ -156,106 +157,6 @@ public class GridCursor : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets the cursor as either valid or invalid for the tool for the target gridPropertyDetails. Returns true if valid or false if invalid
-    /// </summary>
-    /// <param name="gridPropertyDetails"></param>
-    /// <param name="itemDetails"></param>
-    /// <returns></returns>
-    private bool IsCursorValidForTool(GridPropertyDetails gridPropertyDetails, ItemDetails itemDetails)
-    {
-        // Switch on tool
-        switch (itemDetails.itemType)
-        {
-            case ItemType.Hoeing_tool:
-                if (gridPropertyDetails.isDiggable == true && gridPropertyDetails.daysSinceDug == -1)
-                {
-                    #region Need to get any items at locationso we can check if they are reapable
-                    // Get world position for cursor
-                    Vector3 cursorWorldPosition = new Vector3(GetWorldPositionForCursor().x + 0.5f, GetWorldPositionForCursor().y + 0.5f, 0f);
-
-                    //Get list of items at cursor location
-                    List<Item> itemList = new List<Item>();
-
-                    HelperMethods.GetComponentsAtBoxLocation<Item>(out itemList, cursorWorldPosition, Settings.cursorSize, 0f);
-                    #endregion
-
-                    // Loop through items found to see if any are reapable type - we are not going to let the player dig where there are reapable scenary items
-                    bool foundReapable = false;
-
-                    foreach (Item item in itemList)
-                    {
-                        if (InventoryManager.Instance.GetItemDetails(item.ItemCode).itemType == ItemType.Reapable_scenary)
-                        {
-                            foundReapable = true;
-                            break;
-                        }
-                    }
-
-                    if (foundReapable) 
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-
-            case ItemType.Watering_tool: 
-                if (gridPropertyDetails.daysSinceDug > -1 && gridPropertyDetails.daysSinceWatered == -1)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-
-            case ItemType.Chopping_tool:
-            case ItemType.Collecting_tool:
-            case ItemType.Breaking_tool:
-                // Check if item can be harvested with item selected, check item is fully grown
-
-                //Check if seed is planted
-                if (gridPropertyDetails.seedItemCode != -1)
-                {
-                    // Get crop details for seed
-                    CropDetails cropDetails = so_CropDetailsList.GetCropDetails(gridPropertyDetails.seedItemCode);
-
-                    // if crop details found
-                    if (cropDetails != null)
-                    {
-                        // check if crop fully grown
-                        if (gridPropertyDetails.growthDays >= cropDetails.growthDays[cropDetails.growthDays.Length - 1])
-                        {
-                            // Check if crop can be harvested with tool selected
-                            if (cropDetails.CanUseToolToHarvestCrop(itemDetails.itemCode))
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                }
-                return false;
-
-            default:
-                return false;
-        }
-    } 
-
-    /// <summary>
     /// Set the cursor to be invalid
     /// </summary>
     private void SetCursorToInvalid()
@@ -279,7 +180,6 @@ public class GridCursor : MonoBehaviour
     private bool IsCursorValidForCommodity(GridPropertyDetails gridPropertyDetails)
     {
         return gridPropertyDetails.canDropItem;
-
     }
 
     /// <summary>
@@ -288,7 +188,108 @@ public class GridCursor : MonoBehaviour
     private bool IsCursorValidForSeed(GridPropertyDetails gridPropertyDetails)
     {
         return gridPropertyDetails.canDropItem;
+    }
 
+    /// <summary>
+    /// Sets the cursor as either valid or invalid for the tool for the target gridPropertyDetails. Returns true if valid or false if invalid
+    /// </summary>
+    private bool IsCursorValidForTool(GridPropertyDetails gridPropertyDetails, ItemDetails itemDetails)
+    {
+        // Switch on tool
+        switch (itemDetails.itemType)
+        {
+            case ItemType.Hoeing_tool:
+                if (gridPropertyDetails.isDiggable == true && gridPropertyDetails.daysSinceDug == -1)
+                {
+                    #region Need to get any items at location so we can check if they are reapable
+
+                    // Get world position for cursor
+                    Vector3 cursorWorldPosition = new Vector3(GetWorldPositionForCursor().x + 0.5f, GetWorldPositionForCursor().y + 0.5f, 0f);
+
+                    // Get list of items at cursor location
+                    List<Item> itemList = new List<Item>();
+
+                    HelperMethods.GetComponentsAtBoxLocation<Item>(out itemList, cursorWorldPosition, Settings.cursorSize, 0f);
+
+                    #endregion Need to get any items at location so we can check if they are reapable
+
+                    // Loop through items found to see if any are reapable type - we are not going to let the player dig where there are reapable scenary items
+                    bool foundReapable = false;
+
+                    foreach (Item item in itemList)
+                    {
+                        if (InventoryManager.Instance.GetItemDetails(item.ItemCode).itemType == ItemType.Reapable_scenary)
+                        {
+                            foundReapable = true;
+                            break;
+                        }
+                    }
+
+                    if (foundReapable)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+
+            case ItemType.Watering_tool:
+                if (gridPropertyDetails.daysSinceDug > -1 && gridPropertyDetails.daysSinceWatered == -1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            case ItemType.Chopping_tool:
+            case ItemType.Collecting_tool:
+            case ItemType.Breaking_tool:
+
+                // Check if item can be harvested with item selected, check item is fully grown
+
+                // Check if seed planted
+                if (gridPropertyDetails.seedItemCode != -1)
+                {
+                    // Get crop details for seed
+                    CropDetails cropDetails = so_CropDetailsList.GetCropDetails(gridPropertyDetails.seedItemCode);
+
+                    // if crop details found
+                    if (cropDetails != null)
+                    {
+                        // Check if crop fully grown
+                        if (gridPropertyDetails.growthDays >= cropDetails.growthDays[cropDetails.growthDays.Length - 1])
+                        {
+                            // Check if crop can be harvested with tool selected
+                            if (cropDetails.CanUseToolToHarvestCrop(itemDetails.itemCode))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                return false;
+
+
+            default:
+                return false;
+        }
     }
 
     public void DisableCursor()
@@ -326,5 +327,4 @@ public class GridCursor : MonoBehaviour
     {
         return grid.CellToWorld(GetGridPositionForCursor());
     }
-
 }

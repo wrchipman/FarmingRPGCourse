@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 472a2bff1b3c03e4b956fb2163f8cecd, type: 3}
+  m_Script: {fileID: 11500000, guid: b6d6e423cef15d64caf8e7690b5271b9, type: 3}
   m_Name: ArmsNoneNoneWalkLeft
   m_EditorClassIdentifier: 
   animationClip: {fileID: 7400000, guid: bf79bd63a25ff134cb6d7e4e2f193ea1, type: 2}

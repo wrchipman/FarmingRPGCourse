@@ -1,16 +1,15 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-
 [RequireComponent(typeof(GenerateGUID))]
-public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManager>, ISaveable
+public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManager>, ISaveable
 {
     private Transform cropParentTransform;
     private Tilemap groundDecoration1;
     private Tilemap groundDecoration2;
-    private bool isFirstTimeSceneLoaded;
+    private bool isFirstTimeSceneLoaded = true;
     private Grid grid;
     private Dictionary<string, GridPropertyDetails> gridPropertyDictionary;
     [SerializeField] private SO_CropDetailsList so_CropDetailsList = null;
@@ -55,7 +54,7 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
 
     private void ClearDisplayGroundDecorations()
     {
-        // Remove ground decoration
+        // Remove ground decorations
         groundDecoration1.ClearAllTiles();
         groundDecoration2.ClearAllTiles();
     }
@@ -63,6 +62,7 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
     private void ClearDisplayAllPlantedCrops()
     {
         // Destroy all crops in scene
+
         Crop[] cropArray;
         cropArray = FindObjectsOfType<Crop>();
 
@@ -88,6 +88,16 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
         }
     }
 
+    public void DisplayWateredGround(GridPropertyDetails gridPropertyDetails)
+    {
+        // Watered
+        if (gridPropertyDetails.daysSinceWatered > -1)
+        {
+            ConnectWateredGround(gridPropertyDetails);
+        }
+    }
+
+
     private void ConnectDugGround(GridPropertyDetails gridPropertyDetails)
     {
         // Select tile based on surrounding dug tiles
@@ -95,7 +105,8 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
         Tile dugTile0 = SetDugTile(gridPropertyDetails.gridX, gridPropertyDetails.gridY);
         groundDecoration1.SetTile(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY, 0), dugTile0);
 
-        // Set 4 tiles if dug surrounding current tile
+        // Set 4 tiles if dug surrounding current tile - up, down, left, right now that this central tile has been dug
+
         GridPropertyDetails adjacentGridPropertyDetails;
 
         adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY + 1);
@@ -111,7 +122,6 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
             Tile dugTile2 = SetDugTile(gridPropertyDetails.gridX, gridPropertyDetails.gridY - 1);
             groundDecoration1.SetTile(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY - 1, 0), dugTile2);
         }
-
         adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX - 1, gridPropertyDetails.gridY);
         if (adjacentGridPropertyDetails != null && adjacentGridPropertyDetails.daysSinceDug > -1)
         {
@@ -127,9 +137,50 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
         }
     }
 
+    private void ConnectWateredGround(GridPropertyDetails gridPropertyDetails)
+    {
+        // Select tile based on surrounding watered tiles
+
+        Tile wateredTile0 = SetWateredTile(gridPropertyDetails.gridX, gridPropertyDetails.gridY);
+        groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY, 0), wateredTile0);
+
+        // Set 4 tiles if watered surrounding current tile - up, down, left, right now that this central tile has been watered
+
+        GridPropertyDetails adjacentGridPropertyDetails;
+
+        adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY + 1);
+        if (adjacentGridPropertyDetails != null && adjacentGridPropertyDetails.daysSinceWatered > -1)
+        {
+            Tile wateredTile1 = SetWateredTile(gridPropertyDetails.gridX, gridPropertyDetails.gridY + 1);
+            groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY + 1, 0), wateredTile1);
+        }
+
+        adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY - 1);
+        if (adjacentGridPropertyDetails != null && adjacentGridPropertyDetails.daysSinceWatered > -1)
+        {
+            Tile wateredTile2 = SetWateredTile(gridPropertyDetails.gridX, gridPropertyDetails.gridY - 1);
+            groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY - 1, 0), wateredTile2);
+        }
+
+        adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX - 1, gridPropertyDetails.gridY);
+        if (adjacentGridPropertyDetails != null && adjacentGridPropertyDetails.daysSinceWatered > -1)
+        {
+            Tile wateredTile3 = SetWateredTile(gridPropertyDetails.gridX - 1, gridPropertyDetails.gridY);
+            groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX - 1, gridPropertyDetails.gridY, 0), wateredTile3);
+        }
+
+        adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX + 1, gridPropertyDetails.gridY);
+        if (adjacentGridPropertyDetails != null && adjacentGridPropertyDetails.daysSinceWatered > -1)
+        {
+            Tile wateredTile4 = SetWateredTile(gridPropertyDetails.gridX + 1, gridPropertyDetails.gridY);
+            groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX + 1, gridPropertyDetails.gridY, 0), wateredTile4);
+        }
+    }
+
     private Tile SetDugTile(int xGrid, int yGrid)
     {
-        // Get whether surrounding tiles (up, down, left, and right) are dug or not
+        //Get whether surrounding tiles (up,down,left, and right) are dug or not
+
         bool upDug = IsGridSquareDug(xGrid, yGrid + 1);
         bool downDug = IsGridSquareDug(xGrid, yGrid - 1);
         bool leftDug = IsGridSquareDug(xGrid - 1, yGrid);
@@ -201,7 +252,9 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
         {
             return dugGround[15];
         }
+
         return null;
+
         #endregion Set appropriate tile based on whether surrounding tiles are dug or not
     }
 
@@ -213,66 +266,20 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
         {
             return false;
         }
-        else if(gridPropertyDetails.daysSinceDug > -1)
+        else if (gridPropertyDetails.daysSinceDug > -1)
         {
             return true;
         }
-        else { 
-            return false; 
-        }
-    }
-
-    public void DisplayWateredGround(GridPropertyDetails gridPropertyDetails)
-    {
-        // Watered
-        if (gridPropertyDetails.daysSinceWatered > -1)
+        else
         {
-            ConnectWateredGround(gridPropertyDetails);
-        }
-    }
-
-    private void ConnectWateredGround(GridPropertyDetails gridPropertyDetails)
-    {
-        // Select tile based on surrounding watered tiles
-
-        Tile wateredTile0 = SetWateredTile(gridPropertyDetails.gridX, gridPropertyDetails.gridY);
-        groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY, 0), wateredTile0);
-
-        // Set 4 tiles if watered surrounding current tile
-        GridPropertyDetails adjacentGridPropertyDetails;
-
-        adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY + 1);
-        if (adjacentGridPropertyDetails != null && adjacentGridPropertyDetails.daysSinceWatered > -1)
-        {
-            Tile wateredTile1 = SetWateredTile(gridPropertyDetails.gridX, gridPropertyDetails.gridY + 1);
-            groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY + 1, 0), wateredTile1);
-        }
-
-        adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY - 1);
-        if (adjacentGridPropertyDetails != null && adjacentGridPropertyDetails.daysSinceWatered > -1)
-        {
-            Tile wateredTile2 = SetWateredTile(gridPropertyDetails.gridX, gridPropertyDetails.gridY - 1);
-            groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY - 1, 0), wateredTile2);
-        }
-
-        adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX - 1, gridPropertyDetails.gridY);
-        if (adjacentGridPropertyDetails != null && adjacentGridPropertyDetails.daysSinceWatered > -1)
-        {
-            Tile wateredTile3 = SetWateredTile(gridPropertyDetails.gridX - 1, gridPropertyDetails.gridY);
-            groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX - 1, gridPropertyDetails.gridY, 0), wateredTile3);
-        }
-
-        adjacentGridPropertyDetails = GetGridPropertyDetails(gridPropertyDetails.gridX + 1, gridPropertyDetails.gridY);
-        if (adjacentGridPropertyDetails != null && adjacentGridPropertyDetails.daysSinceWatered > -1)
-        {
-            Tile wateredTile4 = SetWateredTile(gridPropertyDetails.gridX + 1, gridPropertyDetails.gridY);
-            groundDecoration2.SetTile(new Vector3Int(gridPropertyDetails.gridX + 1, gridPropertyDetails.gridY, 0), wateredTile4);
+            return false;
         }
     }
 
     private Tile SetWateredTile(int xGrid, int yGrid)
     {
-        // Get whether surrounding tiles (up, down, left, and right) are watered or not
+        // Get whether surrounding tiles (up,down,left, and right) are watered or not
+
         bool upWatered = IsGridSquareWatered(xGrid, yGrid + 1);
         bool downWatered = IsGridSquareWatered(xGrid, yGrid - 1);
         bool leftWatered = IsGridSquareWatered(xGrid - 1, yGrid);
@@ -344,7 +351,9 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
         {
             return wateredGround[15];
         }
+
         return null;
+
         #endregion Set appropriate tile based on whether surrounding tiles are watered or not
     }
 
@@ -372,12 +381,18 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
         foreach (KeyValuePair<string, GridPropertyDetails> item in gridPropertyDictionary)
         {
             GridPropertyDetails gridPropertyDetails = item.Value;
+
             DisplayDugGround(gridPropertyDetails);
+
             DisplayWateredGround(gridPropertyDetails);
+
             DisplayPlantedCrop(gridPropertyDetails);
         }
     }
 
+    /// <summary>
+    /// Display planted crop for gridpropertyDetails
+    /// </summary>
     public void DisplayPlantedCrop(GridPropertyDetails gridPropertyDetails)
     {
         if (gridPropertyDetails.seedItemCode > -1)
@@ -387,15 +402,14 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
 
             if (cropDetails != null)
             {
-
                 // prefab to use
                 GameObject cropPrefab;
 
-                //instanciate cropprefab at grid location
+                // instantiate crop prefab at grid location
                 int growthStages = cropDetails.growthDays.Length;
 
                 int currentGrowthStage = 0;
-                
+              
                 for (int i = growthStages - 1; i >= 0; i--)
                 {
                     if (gridPropertyDetails.growthDays >= cropDetails.growthDays[i])
@@ -403,6 +417,7 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
                         currentGrowthStage = i;
                         break;
                     }
+
                 }
 
                 cropPrefab = cropDetails.growthPrefab[currentGrowthStage];
@@ -421,6 +436,7 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
             }
         }
     }
+
 
     /// <summary>
     /// This initialises the grid property dictionary with the values from the SO_GridProperties assets and stores the values for each scene in
@@ -487,8 +503,10 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
                 this.gridPropertyDictionary = gridPropertyDictionary;
             }
 
+            // Add bool dictionary and set first time scene loaded to true
             sceneSave.boolDictionary = new Dictionary<string, bool>();
             sceneSave.boolDictionary.Add("isFirstTimeSceneLoaded", true);
+
 
             // Add scene save to game object scene data
             GameObjectSave.sceneData.Add(so_GridProperties.sceneName.ToString(), sceneSave);
@@ -497,15 +515,18 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
 
     private void AfterSceneLoaded()
     {
+
         if (GameObject.FindGameObjectWithTag(Tags.CropsParentTransform) != null)
         {
             cropParentTransform = GameObject.FindGameObjectWithTag(Tags.CropsParentTransform).transform;
         }
-        else 
-        { 
-            cropParentTransform = null; 
+        else
+        {
+            cropParentTransform = null;
         }
-        
+
+
+
         // Get Grid
         grid = GameObject.FindObjectOfType<Grid>();
 
@@ -540,14 +561,12 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
     /// <summary>
     ///  Returns the Crop object at the gridX, gridY position or null if no crop was found
     /// </summary>
-    /// <param name="gridPropertyDetails"></param>
-    /// <returns></returns>
     public Crop GetCropObjectAtGridLocation(GridPropertyDetails gridPropertyDetails)
     {
         Vector3 worldPosition = grid.GetCellCenterWorld(new Vector3Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY, 0));
         Collider2D[] collider2DArray = Physics2D.OverlapPointAll(worldPosition);
 
-        // loop through colliders to get crop game object
+        // Loop through colliders to get crop game object
         Crop crop = null;
 
         for (int i = 0; i < collider2DArray.Length; i++)
@@ -559,18 +578,19 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
             if (crop != null && crop.cropGridPosition == new Vector2Int(gridPropertyDetails.gridX, gridPropertyDetails.gridY))
                 break;
         }
+
         return crop;
     }
 
     /// <summary>
     /// Returns Crop Details for the provided seedItemCode
     /// </summary>
-    /// <param name="seedItemCode"></param>
-    /// <returns></returns>
     public CropDetails GetCropDetails(int seedItemCode)
     {
         return so_CropDetailsList.GetCropDetails(seedItemCode);
     }
+
+
 
     /// <summary>
     /// Get the grid property details for the tile at (gridX,gridY).  If no grid property details exist null is returned and can assume that all grid property details values are null or false
@@ -601,32 +621,34 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
                 gridPropertyDictionary = sceneSave.gridPropertyDetailsDictionary;
             }
 
-            // get dictionary of bools - it exists sice we created it in initialise
+            // get dictionary of bools - it exists since we created it in initialise
             if (sceneSave.boolDictionary != null && sceneSave.boolDictionary.TryGetValue("isFirstTimeSceneLoaded", out bool storedIsFirstTimeSceneLoaded))
             {
                 isFirstTimeSceneLoaded = storedIsFirstTimeSceneLoaded;
             }
 
-            // Instantiate any crop prefabs initially  present in the scene
+            // Instantiate any crop prefabs initially present in the scene
             if (isFirstTimeSceneLoaded)
-            {
                 EventHandler.CallInstantiateCropPrefabsEvent();
-            }
+
 
             // If grid properties exist
             if (gridPropertyDictionary.Count > 0)
             {
-                // grid properties details found for the current scene destroy existing ground decoration
+                // grid property details found for the current scene destroy existing ground decoration
                 ClearDisplayGridPropertyDetails();
 
                 // Instantiate grid property details for current scene
                 DisplayGridPropertyDetails();
             }
 
+            // Update first time scene loaded bool
             if (isFirstTimeSceneLoaded == true)
             {
                 isFirstTimeSceneLoaded = false;
             }
+
+
         }
     }
 
@@ -672,13 +694,13 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
         gridPropertyDictionary[key] = gridPropertyDetails;
     }
 
-    private void AdvanceDay(int gameYear, Season gameSeason, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond) 
-    { 
-        // ClearDisplayGridPropertyDetails();
+    private void AdvanceDay(int gameYear, Season gameSeason, int gameDay, string gameDayOfWeek, int gameHour, int gameMinute, int gameSecond)
+    {
+        // Clear Display All Grid Property Details
         ClearDisplayGridPropertyDetails();
 
-        //Loop through all scenes - by looping therough all gridproperties in the array
-        foreach(SO_GridProperties so_GridProperties in so_gridPropertiesArray)
+        // Loop through all scenes - by looping through all gridproperties in the array
+        foreach (SO_GridProperties so_GridProperties in so_gridPropertiesArray)
         {
             // Get gridpropertydetails dictionary for scene
             if (GameObjectSave.sceneData.TryGetValue(so_GridProperties.sceneName.ToString(), out SceneSave sceneSave))
@@ -698,14 +720,14 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
                         {
                             gridPropertyDetails.growthDays += 1;
                         }
-                        
+
                         // If ground is watered, then clear water
                         if (gridPropertyDetails.daysSinceWatered > -1)
                         {
                             gridPropertyDetails.daysSinceWatered = -1;
                         }
 
-                        // set gridpropertydetails
+                        // Set gridpropertydetails
                         SetGridPropertyDetails(gridPropertyDetails.gridX, gridPropertyDetails.gridY, gridPropertyDetails, sceneSave.gridPropertyDetailsDictionary);
 
                         #endregion Update all grid properties to reflect the advance in the day
@@ -714,7 +736,7 @@ public class GridPropertiesManager : SingletonMonoBehaviour<GridPropertiesManage
             }
         }
 
-        // Display  grid propertydetails to reflect changed values
+        // Display grid property details to reflect changed values
         DisplayGridPropertyDetails();
     }
 }
