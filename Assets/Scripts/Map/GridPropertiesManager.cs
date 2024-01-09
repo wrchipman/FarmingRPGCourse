@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(GenerateGUID))]
@@ -590,8 +591,6 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
         return so_CropDetailsList.GetCropDetails(seedItemCode);
     }
 
-
-
     /// <summary>
     /// Get the grid property details for the tile at (gridX,gridY).  If no grid property details exist null is returned and can assume that all grid property details values are null or false
     /// </summary>
@@ -603,6 +602,17 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
     public void ISaveableDeregister()
     {
         SaveLoadManager.Instance.iSaveableObjectList.Remove(this);
+    }
+
+    public void ISaveableLoad(GameSave gameSave)
+    {
+        if (gameSave.gameObjectData.TryGetValue(ISaveableUniqueID, out GameObjectSave gameObjectSave))
+        {
+            GameObjectSave = gameObjectSave;
+
+            // Restore data for current scene
+            ISaveableRestoreScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void ISaveableRegister()
@@ -647,9 +657,15 @@ public class GridPropertiesManager : SingletonMonobehaviour<GridPropertiesManage
             {
                 isFirstTimeSceneLoaded = false;
             }
-
-
         }
+    }
+
+    public GameObjectSave ISaveableSave()
+    {
+        // Store current scene data
+        ISaveableStoreScene(SceneManager.GetActiveScene().name);
+
+        return GameObjectSave;
     }
 
     public void ISaveableStoreScene(string sceneName)

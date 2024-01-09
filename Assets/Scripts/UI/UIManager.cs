@@ -60,7 +60,7 @@ public class UIManager : SingletonMonobehaviour<UIManager>
         HighlightButtonForSelectedTab();
     }
 
-    private void DisablePauseMenu()
+    public void DisablePauseMenu()
     {
         // Destroy any currently dragged items
         pauseMenuInventoryManagement.DestroyCurrentlyDraggedItems();
