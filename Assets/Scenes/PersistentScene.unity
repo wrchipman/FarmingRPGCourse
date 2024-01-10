@@ -7450,6 +7450,7 @@ MonoBehaviour:
     type: 3}
   inputShirtStyleNo: 0
   inputSex: 0
+  inputTrouserColor: {r: 0, g: 0.3679245, b: 0.14512245, a: 1}
 --- !u!1 &1042370025
 GameObject:
   m_ObjectHideFlags: 0
