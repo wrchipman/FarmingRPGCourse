@@ -23,12 +23,14 @@ public class ApplyCharacterCustomisation : MonoBehaviour
     [SerializeField] private Texture2D femaleFarmerBaseTexture = null;
     [SerializeField] private Texture2D shirtsBaseTexture = null;
     [SerializeField] private Texture2D hairBaseTexture = null;
+    [SerializeField] private Texture2D hatBaseTexture = null;
     private Texture2D farmerBaseTexture;
 
     // Created Textures
     [Header("OutputBase Texture To Be Used For Animation")]
     [SerializeField] private Texture2D farmerBaseCustomised = null;
     [SerializeField] private Texture2D hairCustomised = null;
+    [SerializeField] private Texture2D hatCustomised = null;
     private Texture2D farmerBaseShirtsUpdated;
     private Texture2D selectedShirt;
 
@@ -41,6 +43,11 @@ public class ApplyCharacterCustomisation : MonoBehaviour
     [Header("Select Hair Style")]
     [Range(0, 2)]
     [SerializeField] private int inputHairStyleNo = 0;
+
+    // Select Hat Style
+    [Header("Select Hat Style")]
+    [Range(0, 1)]
+    [SerializeField] private int inputHatStyleNo = 0;
 
     // Select Skin Type
     [Header("Select Skin Type")]
@@ -76,6 +83,10 @@ public class ApplyCharacterCustomisation : MonoBehaviour
     private int hairTextureWidth = 16;
     private int hairTextureHeight = 96;
     private int hairStylesInSpriteWidth = 8;
+
+    private int hatTextureWidth = 20;
+    private int hatTextureHeight = 80;
+    private int hatStylesInSpriteWidth = 12;
 
     private List<colorSwap> colorSwapList;
 
@@ -113,6 +124,8 @@ public class ApplyCharacterCustomisation : MonoBehaviour
         ProcessHair();
 
         ProcessSkin();
+
+        ProcessHat();
 
         MergeCustomisations();
     }
@@ -224,6 +237,12 @@ public class ApplyCharacterCustomisation : MonoBehaviour
 
         // Apply texture changes
         farmerBaseCustomised.Apply();
+    }
+
+    private void ProcessHat()
+    {
+        // Create selected hat texture
+        AddHatToTexture(inputHatStyleNo);
     }
 
     private void MergeCustomisations()
@@ -384,6 +403,20 @@ public class ApplyCharacterCustomisation : MonoBehaviour
         // Apply selected hair pixels to texture
         hairCustomised.SetPixels(hairPixels);
         hairCustomised.Apply();
+    }
+
+    private void AddHatToTexture(int hatStyleNo)
+    {
+        // Calculate coordinates for hat pixels
+        int y = (hatStyleNo / hatStylesInSpriteWidth) * hatTextureHeight;
+        int x = (hatStyleNo % hatStylesInSpriteWidth) * hatTextureWidth;
+
+        // Get hat pixels
+        Color[] hatPixels = hatBaseTexture.GetPixels(x, y, hatTextureWidth, hatTextureHeight);
+
+        // Apply selected hair pixels to texture
+        hatCustomised.SetPixels(hatPixels);
+        hatCustomised.Apply();
     }
 
 
