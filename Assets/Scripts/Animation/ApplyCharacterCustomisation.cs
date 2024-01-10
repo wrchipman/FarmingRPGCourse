@@ -37,22 +37,27 @@ public class ApplyCharacterCustomisation : MonoBehaviour
     [Range(0, 1)]
     [SerializeField] private int inputShirtStyleNo = 0;
 
-    // Select hair Style
-    [Header("Select hair Style")]
+    // Select Hair Style
+    [Header("Select Hair Style")]
     [Range(0, 2)]
     [SerializeField] private int inputHairStyleNo = 0;
+
+    // Select Skin Type
+    [Header("Select Skin Type")]
+    [Range(0, 3)]
+    [SerializeField] private int inputSkinType = 0;
 
     // Select Sex
     [Header("Select Sex: 0=Male, 1=Female")]
     [Range(0, 1)]
     [SerializeField] private int inputSex = 0;
 
-
-    // Select hair color
+    // Select Hair Color
     [SerializeField] private Color inputHairColor = Color.black;
 
-    // Select pants color
+    // Select Trouser Color
     [SerializeField] private Color inputTrouserColor = Color.blue;
+
 
     private Facing[,] bodyFacingArray;
     private Vector2Int[,] bodyShirtOffsetArray;
@@ -79,6 +84,13 @@ public class ApplyCharacterCustomisation : MonoBehaviour
     private Color32 armTargetColor2 = new Color32(138, 41, 41, 255); // next darkest
     private Color32 armTargetColor3 = new Color32(172, 50, 50, 255); // lightest
 
+    // Target skin colours for color replacement
+    private Color32 skinTargetColor1 = new Color32(145, 117, 90, 255);  // darkest
+    private Color32 skinTargetColor2 = new Color32(204, 155, 108, 255);  // next darkest
+    private Color32 skinTargetColor3 = new Color32(207, 166, 128, 255);  // next darkest
+    private Color32 skinTargetColor4 = new Color32(238, 195, 154, 255);  // lightest
+
+
     private void Awake()
     {
         // Initialise color swap list
@@ -99,6 +111,8 @@ public class ApplyCharacterCustomisation : MonoBehaviour
         ProcessTrousers();
 
         ProcessHair();
+
+        ProcessSkin();
 
         MergeCustomisations();
     }
@@ -167,7 +181,7 @@ public class ApplyCharacterCustomisation : MonoBehaviour
         // Get trouser pixels to recolor
         Color[] farmerTrouserPixels = farmerBaseTexture.GetPixels(288, 0, 96, farmerBaseTexture.height);
 
-        // Change trouser color
+        // Change trouser colours
         TintPixelColors(farmerTrouserPixels, inputTrouserColor);
 
         // Set changed trouser pixels
@@ -175,11 +189,12 @@ public class ApplyCharacterCustomisation : MonoBehaviour
 
         // Apply texture changes
         farmerBaseCustomised.Apply();
+
     }
 
     private void ProcessHair()
     {
-        // Create selected hair texture
+        // Create Selected Hair Texture
         AddHairToTexture(inputHairStyleNo);
 
         // Get hair pixels to recolor
@@ -190,6 +205,25 @@ public class ApplyCharacterCustomisation : MonoBehaviour
 
         hairCustomised.SetPixels(farmerSelectedHairPixels);
         hairCustomised.Apply();
+    }
+
+
+    private void ProcessSkin()
+    {
+        // Get skin pixels to recolor
+        Color[] farmerPixelsToRecolour = farmerBaseCustomised.GetPixels(0, 0, 288, farmerBaseTexture.height);
+
+        // Populate Skin Color Swap List
+        PopulateSkinColorSwapList(inputSkinType);
+
+        // Change skin colours
+        ChangePixelColors(farmerPixelsToRecolour, colorSwapList);
+
+        // Set recoloured pixels
+        farmerBaseCustomised.SetPixels(0, 0, 288, farmerBaseTexture.height, farmerPixelsToRecolour);
+
+        // Apply texture changes
+        farmerBaseCustomised.Apply();
     }
 
     private void MergeCustomisations()
@@ -223,7 +257,6 @@ public class ApplyCharacterCustomisation : MonoBehaviour
         }
     }
 
-
     private void PopulateArmColorSwapList()
     {
         // Clear color swap list
@@ -234,6 +267,53 @@ public class ApplyCharacterCustomisation : MonoBehaviour
         colorSwapList.Add(new colorSwap(armTargetColor2, selectedShirt.GetPixel(0, 6)));
         colorSwapList.Add(new colorSwap(armTargetColor3, selectedShirt.GetPixel(0, 5)));
     }
+
+    private void PopulateSkinColorSwapList(int skinType)
+    {
+        // Clear color swap list
+        colorSwapList.Clear();
+
+        // Skin replacement colors
+        // Switch on skin type
+        switch (skinType)
+        {
+            case 0:
+                colorSwapList.Add(new colorSwap(skinTargetColor1, skinTargetColor1));
+                colorSwapList.Add(new colorSwap(skinTargetColor2, skinTargetColor2));
+                colorSwapList.Add(new colorSwap(skinTargetColor3, skinTargetColor3));
+                colorSwapList.Add(new colorSwap(skinTargetColor4, skinTargetColor4));
+                break;
+
+            case 1:
+                colorSwapList.Add(new colorSwap(skinTargetColor1, new Color32(187, 157, 128, 255)));
+                colorSwapList.Add(new colorSwap(skinTargetColor2, new Color32(231, 187, 144, 255)));
+                colorSwapList.Add(new colorSwap(skinTargetColor3, new Color32(221, 186, 154, 255)));
+                colorSwapList.Add(new colorSwap(skinTargetColor4, new Color32(213, 189, 167, 255)));
+                break;
+
+            case 2:
+                colorSwapList.Add(new colorSwap(skinTargetColor1, new Color32(105, 69, 2, 255)));
+                colorSwapList.Add(new colorSwap(skinTargetColor2, new Color32(128, 87, 12, 255)));
+                colorSwapList.Add(new colorSwap(skinTargetColor3, new Color32(145, 103, 26, 255)));
+                colorSwapList.Add(new colorSwap(skinTargetColor4, new Color32(161, 114, 25, 255)));
+                break;
+
+            case 3:
+                colorSwapList.Add(new colorSwap(skinTargetColor1, new Color32(151, 132, 0, 255)));
+                colorSwapList.Add(new colorSwap(skinTargetColor2, new Color32(187, 166, 15, 255)));
+                colorSwapList.Add(new colorSwap(skinTargetColor3, new Color32(209, 188, 39, 255)));
+                colorSwapList.Add(new colorSwap(skinTargetColor4, new Color32(211, 199, 112, 255)));
+                break;
+
+            default:
+                colorSwapList.Add(new colorSwap(skinTargetColor1, skinTargetColor1));
+                colorSwapList.Add(new colorSwap(skinTargetColor2, skinTargetColor2));
+                colorSwapList.Add(new colorSwap(skinTargetColor3, skinTargetColor3));
+                colorSwapList.Add(new colorSwap(skinTargetColor4, skinTargetColor4));
+                break;
+        }
+    }
+
 
     private void ChangePixelColors(Color[] baseArray, List<colorSwap> colorSwapList)
     {
@@ -255,7 +335,8 @@ public class ApplyCharacterCustomisation : MonoBehaviour
 
     private bool isSameColor(Color color1, Color color2)
     {
-        if ((color1.r == color2.r) && (color1.g == color2.g) && (color1.b == color2.b) && (color1.a == color2.a))
+        //if ((color1.r == color2.r) && (color1.g == color2.g) && (color1.b == color2.b) && (color1.a == color2.a))
+        if (color1 == color2)
         {
             return true;
         }
@@ -290,7 +371,7 @@ public class ApplyCharacterCustomisation : MonoBehaviour
             }
         }
     }
-    
+
     private void AddHairToTexture(int hairStyleNo)
     {
         // Calculate coordinates for hair pixels
@@ -304,6 +385,7 @@ public class ApplyCharacterCustomisation : MonoBehaviour
         hairCustomised.SetPixels(hairPixels);
         hairCustomised.Apply();
     }
+
 
     private void AddShirtToTexture(int shirtStyleNo)
     {
