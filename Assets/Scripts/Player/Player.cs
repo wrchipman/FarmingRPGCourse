@@ -935,7 +935,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     public GameObjectSave ISaveableSave()
     {
         // Delete saveScene for game object if it already exists
-        GameObjectSave.sceneData.Remove(Settings.PersistantScene);
+        GameObjectSave.sceneData.Remove(Settings.PersistentScene);
 
         // Create saveScene for game object
         SceneSave sceneSave = new SceneSave();
@@ -957,7 +957,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         sceneSave.stringDictionary.Add("playerDirection", playerDirection.ToString());
 
         // Add sceneSave data for player game object
-        GameObjectSave.sceneData.Add(Settings.PersistantScene, sceneSave);
+        GameObjectSave.sceneData.Add(Settings.PersistentScene, sceneSave);
 
         return GameObjectSave;
     }
@@ -967,7 +967,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         if (gameSave.gameObjectData.TryGetValue(ISaveableUniqueID, out GameObjectSave gameObjectSave))
         {
             // Get save data dictionary for scene
-            if (gameObjectSave.sceneData.TryGetValue(Settings.PersistantScene, out SceneSave sceneSave))
+            if (gameObjectSave.sceneData.TryGetValue(Settings.PersistentScene, out SceneSave sceneSave))
             {
                 // Get player position
                 if (sceneSave.vector3Dictionary != null && sceneSave.vector3Dictionary.TryGetValue("playerPosition", out Vector3Serializable playerPosition))

@@ -333,7 +333,7 @@ public class InventoryManager :SingletonMonobehaviour<InventoryManager>, ISaveab
         SceneSave sceneSave = new SceneSave();
 
         // Remove any existing scene save for persistant scene for this gameobject
-        GameObjectSave.sceneData.Remove(Settings.PersistantScene);
+        GameObjectSave.sceneData.Remove(Settings.PersistentScene);
 
         // Add inventory lists array to persistant scene save
         sceneSave.listInvItemArray = inventoryLists;
@@ -343,7 +343,7 @@ public class InventoryManager :SingletonMonobehaviour<InventoryManager>, ISaveab
         sceneSave.intArrayDictionary.Add("inventoryListCapacityArray", inventoryListCapacityIntArray);
 
         // add scene save for game object
-        GameObjectSave.sceneData.Add(Settings.PersistantScene, sceneSave);
+        GameObjectSave.sceneData.Add(Settings.PersistentScene, sceneSave);
 
         return GameObjectSave;
     }
@@ -355,7 +355,7 @@ public class InventoryManager :SingletonMonobehaviour<InventoryManager>, ISaveab
             GameObjectSave = gameObjectSave;
 
             // Need to find inventory lists - start by trying to locate saveScene for game object
-            if (gameObjectSave.sceneData.TryGetValue(Settings.PersistantScene, out SceneSave sceneSave))
+            if (gameObjectSave.sceneData.TryGetValue(Settings.PersistentScene, out SceneSave sceneSave))
             {
                  // list inv items array exists for persistant scene
                 if (sceneSave.listInvItemArray != null)

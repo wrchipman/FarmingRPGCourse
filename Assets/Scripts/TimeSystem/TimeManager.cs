@@ -197,7 +197,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
     public GameObjectSave ISaveableSave()
     {
         // Delete existing scene save if exists
-        GameObjectSave.sceneData.Remove(Settings.PersistantScene);
+        GameObjectSave.sceneData.Remove(Settings.PersistentScene);
 
         // Create new scene save
         SceneSave sceneSave = new SceneSave();
@@ -219,7 +219,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
         sceneSave.stringDictionary.Add("gameDayOfWeek", gameDayOfWeek);
         sceneSave.stringDictionary.Add("gameSeason", gameSeason.ToString());
 
-        GameObjectSave.sceneData.Add(Settings.PersistantScene, sceneSave);
+        GameObjectSave.sceneData.Add(Settings.PersistentScene, sceneSave);
 
         return GameObjectSave;
     }
@@ -232,7 +232,7 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
             GameObjectSave = gameObjectSave;
 
             // get saved scene data for game object
-            if (GameObjectSave.sceneData.TryGetValue(Settings.PersistantScene, out SceneSave sceneSave))
+            if (GameObjectSave.sceneData.TryGetValue(Settings.PersistentScene, out SceneSave sceneSave))
             {
                 // if int and string dictionaries are found
                 if (sceneSave.intDictionary != null && sceneSave.stringDictionary != null)
