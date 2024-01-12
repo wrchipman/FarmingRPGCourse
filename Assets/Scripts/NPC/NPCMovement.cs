@@ -102,6 +102,16 @@ public class NPCMovement : MonoBehaviour
 
                     npcCurrentScene = npcMovementStep.sceneName;
 
+                    // If NPC is about to move to a new scene reset position to starting point in new scene and update step times
+                    if (npcCurrentScene != npcPreviousMovementStepScene)
+                    {
+                        npcCurrentGridPosition = (Vector3Int)npcMovementStep.gridCoordinate;
+                        npcNextGridPosition = npcCurrentGridPosition;
+                        transform.position = GetWorldPosition(npcCurrentGridPosition);
+                        npcPreviousMovementStepScene = npcCurrentScene;
+                        npcPath.UpdateTimesOnPath();
+                    }
+                    
                     // If NPC is in current scene then set NPC to active to make visible, pop the movement step off the stack and then call method to move NPC
                     if (npcCurrentScene.ToString() == SceneManager.GetActiveScene().name)
                     {
@@ -114,6 +124,29 @@ public class NPCMovement : MonoBehaviour
                         TimeSpan npcMovementStepTime = new TimeSpan(npcMovementStep.hour, npcMovementStep.minute, npcMovementStep.second);
 
                         MoveToGridPosition(npcNextGridPosition, npcMovementStepTime, TimeManager.Instance.GetGameTime());
+                    }
+                    // else if NPC is not in current scene then set NPC to inactive to make invisible
+                    // - once the movement step time is less than game time(in the past) then pop movement step off the stack and set NPC position to movement step position
+                    else
+                    {
+                        SetNPCInactiveInScene();
+
+                        npcCurrentGridPosition = (Vector3Int)npcMovementStep.gridCoordinate;
+                        npcNextGridPosition = npcCurrentGridPosition;
+                        transform.position = GetWorldPosition(npcCurrentGridPosition);
+
+                        TimeSpan npcMovementStepTime = new TimeSpan(npcMovementStep.hour, npcMovementStep.minute, npcMovementStep.second);
+
+                        TimeSpan gameTime = TimeManager.Instance.GetGameTime();
+
+                        if (npcMovementStepTime < gameTime)
+                        {
+                            npcMovementStep = npcPath.npcMovementStepStack.Pop();
+
+                            npcCurrentGridPosition = (Vector3Int)npcMovementStep.gridCoordinate;
+                            npcNextGridPosition = npcCurrentGridPosition;
+                            transform.position = GetWorldPosition(npcCurrentGridPosition);
+                        }
                     }
                 }
                 // else if no more NPC movement steps
@@ -262,6 +295,8 @@ public class NPCMovement : MonoBehaviour
         {
             SetNPCInactiveInScene();
         }
+
+        npcPreviousMovementStepScene = npcCurrentScene;
 
         // Get NPC Current Grid Position
         npcCurrentGridPosition = GetGridPosition(transform.position);

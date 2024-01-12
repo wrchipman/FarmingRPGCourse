@@ -14,6 +14,8 @@ public static class Settings
     // Tilemap
     public const float gridCellSize = 1f; // grid cell size in unity units
     public const float gridCellDiagonalSize = 1.41f; // diagonal distance betwen unity cell centers
+    public const int maxGridWidth = 99999;
+    public const int maxGridHeight = 99999;
     public static Vector2 cursorSize = Vector2.one;
 
     // Player

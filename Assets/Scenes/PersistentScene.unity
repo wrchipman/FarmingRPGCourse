@@ -8435,9 +8435,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1234951873}
+  - component: {fileID: 1234951874}
   - component: {fileID: 1234951872}
   - component: {fileID: 1234951871}
-  - component: {fileID: 1234951874}
   m_Layer: 0
   m_Name: NPCManager
   m_TagString: Untagged
@@ -8459,6 +8459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcPath: {fileID: 1992787287}
   moveNPC: 0
+  sceneName: 0
   finishPosition: {x: 0, y: 0}
   idleDownAnimationClip: {fileID: 7400000, guid: cb83867c6252b5c4a8e8758697474f88,
     type: 2}
@@ -8505,6 +8506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4e324c1b44b5648b373fd2ef4f7b2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  so_SceneRouteList: {fileID: 11400000, guid: d574bc0f0d0ee07419edf3d9706ddc06, type: 2}
   npcArray: []
 --- !u!114 &1245761926 stripped
 MonoBehaviour:

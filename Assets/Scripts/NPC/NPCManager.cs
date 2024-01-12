@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(AStar))]
 public class NPCManager : SingletonMonobehaviour<NPCManager>
 {
+    [SerializeField] private SO_SceneRouteList so_SceneRouteList = null;
+    private Dictionary<string, SceneRoute> sceneRouteDictionary;
+    
     [HideInInspector]
     public NPC[] npcArray;
 
@@ -13,6 +16,25 @@ public class NPCManager : SingletonMonobehaviour<NPCManager>
     protected override void Awake()
     {
         base.Awake();
+
+        // Create sceneRoute Dictionary
+        sceneRouteDictionary = new Dictionary<string, SceneRoute>();
+
+        if (so_SceneRouteList.sceneRouteList.Count > 0 )
+        {
+            foreach (SceneRoute so_sceneRoute in so_SceneRouteList.sceneRouteList)
+            {
+                // Check for duplicate routes in dictionary
+                if (sceneRouteDictionary.ContainsKey(so_sceneRoute.fromSceneName.ToString() + so_sceneRoute.toSceneName.ToString()))
+                {
+                    Debug.Log("** Duplicate scene route key found ** Check for duplicate routes in the scriptable object scene route list");
+                    continue;
+                }
+
+                // add route to dictionary
+                sceneRouteDictionary.Add(so_sceneRoute.fromSceneName.ToString() + so_sceneRoute.toSceneName.ToString(), so_sceneRoute);
+            }
+        }
 
         aStar = GetComponent<AStar>();
 
@@ -50,6 +72,21 @@ public class NPCManager : SingletonMonobehaviour<NPCManager>
             {
                 npcMovement.SetNPCInactiveInScene();
             }
+        }
+    }
+
+    public SceneRoute GetSceneRoute(string fromSceneName, string toSceneName)
+    {
+        SceneRoute sceneRoute;
+
+        // Get scene route from dictionary
+        if (sceneRouteDictionary.TryGetValue(fromSceneName + toSceneName, out sceneRoute))
+        {
+            return sceneRoute;
+        }
+        else
+        {
+            return null;
         }
     }
 
