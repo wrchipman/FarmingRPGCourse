@@ -10,12 +10,12 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(BoxCollider2D))]
 public class NPCMovement : MonoBehaviour
 {
-    [HideInInspector] public SceneName npcCurrentScene;
+    public SceneName npcCurrentScene;
     [HideInInspector] public SceneName npcTargetScene;
     [HideInInspector] public Vector3Int npcCurrentGridPosition;
     [HideInInspector] public Vector3Int npcTargetGridPosition;
     [HideInInspector] public Vector3 npcTargetWorldPosition;
-    [HideInInspector] public Direction npcFacingDirectionAtDestination;
+    public Direction npcFacingDirectionAtDestination;
 
     private SceneName npcPreviousMovementStepScene;
     private Vector3Int npcNextGridPosition;
