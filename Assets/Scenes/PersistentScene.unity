@@ -10996,6 +10996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9eab5f0cb4fc104eab49054823fd8e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentWeather: 0
 --- !u!4 &1525419029
 Transform:
   m_ObjectHideFlags: 0
@@ -14376,6 +14377,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3315283951817686848, guid: 64296e369d09e2149aa3bb10f932c93f,
+        type: 3}
+      propertyPath: so_NPCScheduleEventList
+      value: 
+      objectReference: {fileID: 11400000, guid: 62eb973acec685140b2d042261cf5c6d,
+        type: 2}
     - target: {fileID: 5894516922654266949, guid: 64296e369d09e2149aa3bb10f932c93f,
         type: 3}
       propertyPath: m_Size.y
