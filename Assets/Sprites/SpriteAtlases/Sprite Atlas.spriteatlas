@@ -106,6 +106,7 @@ SpriteAtlas:
     - fec47794c20ce834da941a7b4e8caa07: -1166211891172804109
     - fec47794c20ce834da941a7b4e8caa07: 21300000
     - fec47794c20ce834da941a7b4e8caa07: 1957107745717523172
+    - 058026b43700c2a469ffd57902fc2bf8: 21300000
     - 2a6700e4157309649a1edb27b126da7c: 21300000
     - 89c46045b5f23d840b62099f6f1f6344: 21300000
     - 60f7a57556be87841a8cabc94054df28: 21300000
@@ -817,6 +818,7 @@ SpriteAtlas:
     - 730e572c78cf0244ca0db36bb8f3af7f: 21300000
     - 2a61f48c8f2dfed4da6f2f8e2485ee15: 21300000
     - 90499fac1706de44382ab07f7887e79e: 21300000
+    - 4e67132d3774a2d468916ca06c044412: 21300000
     - b2eff0cde9f776947b747c1a4cc96406: 21300000
     - d1488fdd7509cda4f9b89da8bb3c5a68: 21300000
     - ffd3a07e9702a614284d1e5a4be9f532: 21300000
@@ -941,6 +943,7 @@ SpriteAtlas:
   - {fileID: -1166211891172804109, guid: fec47794c20ce834da941a7b4e8caa07, type: 3}
   - {fileID: 21300000, guid: fec47794c20ce834da941a7b4e8caa07, type: 3}
   - {fileID: 1957107745717523172, guid: fec47794c20ce834da941a7b4e8caa07, type: 3}
+  - {fileID: 21300000, guid: 058026b43700c2a469ffd57902fc2bf8, type: 3}
   - {fileID: 21300000, guid: 2a6700e4157309649a1edb27b126da7c, type: 3}
   - {fileID: 21300000, guid: 89c46045b5f23d840b62099f6f1f6344, type: 3}
   - {fileID: 21300000, guid: 60f7a57556be87841a8cabc94054df28, type: 3}
@@ -1652,6 +1655,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 730e572c78cf0244ca0db36bb8f3af7f, type: 3}
   - {fileID: 21300000, guid: 2a61f48c8f2dfed4da6f2f8e2485ee15, type: 3}
   - {fileID: 21300000, guid: 90499fac1706de44382ab07f7887e79e, type: 3}
+  - {fileID: 21300000, guid: 4e67132d3774a2d468916ca06c044412, type: 3}
   - {fileID: 21300000, guid: b2eff0cde9f776947b747c1a4cc96406, type: 3}
   - {fileID: 21300000, guid: d1488fdd7509cda4f9b89da8bb3c5a68, type: 3}
   - {fileID: 21300000, guid: ffd3a07e9702a614284d1e5a4be9f532, type: 3}
@@ -1775,6 +1779,7 @@ SpriteAtlas:
   - effects_3
   - effects_0
   - effects_1
+  - Lamp
   - InventoryPlayerGreyedOut
   - Transparent16x16
   - Table
@@ -2486,6 +2491,7 @@ SpriteAtlas:
   - Acorn
   - Chair
   - Collision Tile Diagonal
+  - JackOLantern
   - InventoryHighlight
   - PauseScreenSelectedTab
   - Stone2Seed

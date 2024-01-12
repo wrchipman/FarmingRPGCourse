@@ -184,6 +184,11 @@ public class TimeManager : SingletonMonobehaviour<TimeManager>, ISaveable
         return gameTime;
     }
 
+    public Season GetGameSeason()
+    {
+        return gameSeason;
+    }
+
     public void ISaveableRegister()
     {
         SaveLoadManager.Instance.iSaveableObjectList.Add(this);
